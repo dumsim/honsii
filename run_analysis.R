@@ -26,7 +26,7 @@
 
   # Load label files
   labels_attrib<-read.table(paste(dir_data,"features.txt",sep=""))
-  labels_activity<-read.table(paste(dir_data,"activity_labels.txt",sep=""))
+  labels_activity<-read.table(paste(dir_data,"activity_labels.txt",sep=""),stringsAsFactors=FALSE)
 
 # Check data 
   # Test that the datasets have the same column names
@@ -47,25 +47,32 @@
   colnames(d_activity)<-c("activitynumber")
   colnames(labels_activity)<-c("activitynumber","activityname")
   colnames(d_person)<-c("subject")
-      
-# Filter for columns containing "mean(" or "std("
+  
+# Merge activity labels into Activity data set
+  d_activity<-merge(d_activity,labels_activity)  
+
+  # Filter for columns containing "mean(" or "std("
   colselect <-sapply(labels_attrib[,2],FUN=function(x){x %like% "mean\\("|x %like% "std\\("})
   d_attrib<- d_attrib[,c(colselect==TRUE)]
 
-# Merge activity labels into activity data
-  d_activity<-merge(d_activity,labels_activity)
-  
 # Bind activity, subject and attribute (switch to data.table)
-  d_merged <- data.table(cbind(d_person,activityname=d_activity$activityname,d_attrib))
-  
+  d_merged<- data.table(cbind(d_person,activityname=d_activity$activityname,d_attrib))
+
+# Clean column names to remove special characters  
+  colnames(d_merged)<-gsub('\\-mean\\(\\)\\-','Mean',colnames(d_merged))
+  colnames(d_merged)<-gsub('\\-mean\\(\\)','Mean',colnames(d_merged))
+  colnames(d_merged)<-gsub('\\-std\\(\\)\\-','StDev',colnames(d_merged))
+  colnames(d_merged)<-gsub('\\-std\\(\\)','StDev',colnames(d_merged))  
+        
 # Create tidy data set with summary by subject and activity
   d_tidy <- d_merged[,j=lapply(.SD,mean),keyby=c('subject','activityname')]
-  
+    
 # Remove temp files
   rm(colselect,d_activity,d_attrib,d_merged, d_person,d_test_activity,d_test_attrib,d_test_person,d_train_activity,d_train_attrib,d_train_person,dir_data, labels_activity,labels_attrib)
   
-# Output to terminal
-  print(d_tidy)
+# Output
+  write.table(d_tidy,file="SamsungOutput.txt",row.names=FALSE)
+  #print(d_tidy)
   
 # END OF PROJECT ------------------------------------------------------------------------------------------------------------#
   
