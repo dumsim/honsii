@@ -5,18 +5,92 @@ date: "Saturday, April 25, 2015"
 output: html_document
 ---
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+###Category and Variable Definitions 
+A complete set of source data definitions is available through the source data link in the readme.
+The following table presents the the source data origin, the function applied to the tidy data and the name of the mapped tidy data column:
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Source Name            | Function Applied | Tidy Data Name    
+-----------------------|------------------|-----------------------------------------------------------------  
+subject|head group|subject
+activityname|sub group|activityname
+tBodyAcc-mean()-X|Mean|tBodyAccMeanX
+tBodyAcc-mean()-Y|Mean|tBodyAccMeanY
+tBodyAcc-mean()-Z|Mean|tBodyAccMeanZ
+tBodyAcc-std()-X|Mean|tBodyAccStDevX
+tBodyAcc-std()-Y|Mean|tBodyAccStDevY
+tBodyAcc-std()-Z|Mean|tBodyAccStDevZ
+tGravityAcc-mean()-X|Mean|tGravityAccMeanX
+tGravityAcc-mean()-Y|Mean|tGravityAccMeanY
+tGravityAcc-mean()-Z|Mean|tGravityAccMeanZ
+tGravityAcc-std()-X|Mean|tGravityAccStDevX
+tGravityAcc-std()-Y|Mean|tGravityAccStDevY
+tGravityAcc-std()-Z|Mean|tGravityAccStDevZ
+tBodyAccJerk-mean()-X|Mean|tBodyAccJerkMeanX
+tBodyAccJerk-mean()-Y|Mean|tBodyAccJerkMeanY
+tBodyAccJerk-mean()-Z|Mean|tBodyAccJerkMeanZ
+tBodyAccJerk-std()-X|Mean|tBodyAccJerkStDevX
+tBodyAccJerk-std()-Y|Mean|tBodyAccJerkStDevY
+tBodyAccJerk-std()-Z|Mean|tBodyAccJerkStDevZ
+tBodyGyro-mean()-X|Mean|tBodyGyroMeanX
+tBodyGyro-mean()-Y|Mean|tBodyGyroMeanY
+tBodyGyro-mean()-Z|Mean|tBodyGyroMeanZ
+tBodyGyro-std()-X|Mean|tBodyGyroStDevX
+tBodyGyro-std()-Y|Mean|tBodyGyroStDevY
+tBodyGyro-std()-Z|Mean|tBodyGyroStDevZ
+tBodyGyroJerk-mean()-X|Mean|tBodyGyroJerkMeanX
+tBodyGyroJerk-mean()-Y|Mean|tBodyGyroJerkMeanY
+tBodyGyroJerk-mean()-Z|Mean|tBodyGyroJerkMeanZ
+tBodyGyroJerk-std()-X|Mean|tBodyGyroJerkStDevX
+tBodyGyroJerk-std()-Y|Mean|tBodyGyroJerkStDevY
+tBodyGyroJerk-std()-Z|Mean|tBodyGyroJerkStDevZ
+tBodyAccMag-mean()|Mean|tBodyAccMagMean
+tBodyAccMag-std()|Mean|tBodyAccMagStDev
+tGravityAccMag-mean()|Mean|tGravityAccMagMean
+tGravityAccMag-std()|Mean|tGravityAccMagStDev
+tBodyAccJerkMag-mean()|Mean|tBodyAccJerkMagMean
+tBodyAccJerkMag-std()|Mean|tBodyAccJerkMagStDev
+tBodyGyroMag-mean()|Mean|tBodyGyroMagMean
+tBodyGyroMag-std()|Mean|tBodyGyroMagStDev
+tBodyGyroJerkMag-mean()|Mean|tBodyGyroJerkMagMean
+tBodyGyroJerkMag-std()|Mean|tBodyGyroJerkMagStDev
+fBodyAcc-mean()-X|Mean|fBodyAccMeanX
+fBodyAcc-mean()-Y|Mean|fBodyAccMeanY
+fBodyAcc-mean()-Z|Mean|fBodyAccMeanZ
+fBodyAcc-std()-X|Mean|fBodyAccStDevX
+fBodyAcc-std()-Y|Mean|fBodyAccStDevY
+fBodyAcc-std()-Z|Mean|fBodyAccStDevZ
+fBodyAccJerk-mean()-X|Mean|fBodyAccJerkMeanX
+fBodyAccJerk-mean()-Y|Mean|fBodyAccJerkMeanY
+fBodyAccJerk-mean()-Z|Mean|fBodyAccJerkMeanZ
+fBodyAccJerk-std()-X|Mean|fBodyAccJerkStDevX
+fBodyAccJerk-std()-Y|Mean|fBodyAccJerkStDevY
+fBodyAccJerk-std()-Z|Mean|fBodyAccJerkStDevZ
+fBodyGyro-mean()-X|Mean|fBodyGyroMeanX
+fBodyGyro-mean()-Y|Mean|fBodyGyroMeanY
+fBodyGyro-mean()-Z|Mean|fBodyGyroMeanZ
+fBodyGyro-std()-X|Mean|fBodyGyroStDevX
+fBodyGyro-std()-Y|Mean|fBodyGyroStDevY
+fBodyGyro-std()-Z|Mean|fBodyGyroStDevZ
+fBodyAccMag-mean()|Mean|fBodyAccMagMean
+fBodyAccMag-std()|Mean|fBodyAccMagStDev
+fBodyBodyAccJerkMag-mean()|Mean|fBodyBodyAccJerkMagMean
+fBodyBodyAccJerkMag-std()|Mean|fBodyBodyAccJerkMagStDev
+fBodyBodyGyroMag-mean()|Mean|fBodyBodyGyroMagMean
+fBodyBodyGyroMag-std()|Mean|fBodyBodyGyroMagStDev
+fBodyBodyGyroJerkMag-mean()|Mean|fBodyBodyGyroJerkMagMean
+fBodyBodyGyroJerkMag-std()|Mean|fBodyBodyGyroJerkMagStDev
 
-```{r}
-summary(cars)
-```
+####From the source data code book, the following variable interpretations are provided:  
+>The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz.    
+>Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).  
+>Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+>These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-You can also embed plots, for example:
+>The set of variables that were estimated from these signals are: 
+- mean(): Mean value
+- std(): Standard deviation  
 
-```{r, echo=FALSE}
-plot(cars)
-```
+*Other variables not forming part of this analysis.*   
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+========================
